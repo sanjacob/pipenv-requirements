@@ -7,12 +7,12 @@ branding:
 inputs:
   from-pipfile:
     description: "Only include dependencies from Pipfile"
-    required: true
     default: true
+    type: boolean
   dev:
     description: "Also add development requirements"
-    required: true
     default: false
+    type: boolean
 
 runs:
   using: "composite"
