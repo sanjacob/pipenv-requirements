@@ -1,0 +1,33 @@
+name: 'Pipenv Requirements Install Action'
+description: 'Generate requirements.txt and install using pip.'
+branding:
+  icon: 'box'
+  color: 'black'
+
+inputs:
+  from-pipfile:
+    description: "Only include dependencies from Pipfile"
+    required: true
+    default: true
+  dev:
+    description: "Also add development requirements"
+    required: true
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+    - run: python -m pip install --upgrade pip
+      shell: bash
+
+    - run: pip install pipenv
+      shell: bash
+
+    - env:
+        ARG_DEV: ${{ inputs.dev && '--dev' || '' }}
+        ARG_PIPFILE: ${{ inputs.from-pipfile && '--from-pipfile' || '' }}
+      run: pipenv requirements $ARG_DEV $ARG_PIPFILE > requirements.txt 
+      shell: bash
+
+    - run: pip install -r requirements.txt
+      shell: bash
