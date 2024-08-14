@@ -24,8 +24,8 @@ runs:
       shell: bash
 
     - env:
-        ARG_DEV: ${{ inputs.dev && '--dev' || '' }}
-        ARG_PIPFILE: ${{ inputs.from-pipfile && '--from-pipfile' || '' }}
+        ARG_DEV: ${{ fromJSON(inputs.dev) && '--dev' || '' }}
+        ARG_PIPFILE: ${{ fromJSON(inputs.from-pipfile) && '--from-pipfile' || '' }}
       run: pipenv requirements $ARG_DEV $ARG_PIPFILE > requirements.txt 
       shell: bash
 
